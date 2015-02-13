@@ -20,16 +20,9 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <returns>True if given file extension is supported protected extension type</returns>
         public static bool IsValidProtectedFileExtension(string fileExtension)
         {
-            //TODO fileExtension starts with "." or not
-            if (Utility.IsProtectedTextFileExtension(fileExtension)
-                || Utility.IsProtectedJpgFileExtension(fileExtension)
-                || Utility.IsProtectedGenericFileExtension(fileExtension)
-                )
-            {
-                return true;
-            }
-
-            return false;
+            return Utility.IsProtectedTextFileExtension(fileExtension)
+                   || Utility.IsProtectedJpgFileExtension(fileExtension)
+                   || Utility.IsProtectedGenericFileExtension(fileExtension);
         }
 
         /// <summary>
@@ -47,9 +40,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                 return encryptedFileName;
             }
 
-            // TODO need more generic logic below
-            string newExtension = string.Empty;
-
+            string newExtension;
             if (Utility.IsProtectedTextFileExtension(originalExtension))
             {
                 newExtension = ".txt";
@@ -95,15 +86,9 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <returns>True if file extension is of protected text type</returns>
         public static bool IsProtectedTextFileExtension(string fileExtension)
         {
-            if (string.Compare(
-                fileExtension,
+            return string.Compare(fileExtension,
                 Constants.ProtectedTextFileExtension,
-                StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                return true;
-            }
-
-            return false;
+                StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
@@ -113,15 +98,10 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <returns>True if file extension is of protected jpg type</returns>
         public static bool IsProtectedJpgFileExtension(string fileExtension)
         {
-            if (string.Compare(
+            return string.Compare(
                 fileExtension,
                 Constants.ProtectedJpgFileExtension,
-                StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                return true;
-            }
-
-            return false;
+                StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
@@ -131,15 +111,10 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <returns>True if file extension is of protected generic type</returns>
         public static bool IsProtectedGenericFileExtension(string fileExtension)
         {
-            if (string.Compare(
+            return string.Compare(
                 fileExtension,
                 Constants.ProtectedGenericFileExtension,
-                StringComparison.OrdinalIgnoreCase) == 0)
-            {
-                return true;
-            }
-
-            return false;
+                StringComparison.OrdinalIgnoreCase) == 0;
         }
     }
 }

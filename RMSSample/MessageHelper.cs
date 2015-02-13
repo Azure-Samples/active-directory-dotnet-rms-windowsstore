@@ -9,6 +9,23 @@ using Windows.UI.Popups;
 namespace Microsoft.RightsManagement.Apps.RMSSample
 {
     /// <summary>
+    /// Enum for messages that are displayed by the app e.g. informatory
+    /// or error messages
+    /// </summary>
+    public enum MessageType
+    {
+        /// <summary>
+        /// Informatory message
+        /// </summary>
+        InfoMessage,
+
+        /// <summary>
+        /// Error message
+        /// </summary>
+        ErrorMessage
+    }
+
+    /// <summary>
     /// Helper class to display the different types of message box in the app.
     /// </summary>
     internal class MessageHelper

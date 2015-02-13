@@ -19,8 +19,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
     {
         public GenericProtectionConsumptionPage()
         {
-            this.InitializeComponent();
-            PermissionsViewer.IsAutoDismissEnabled = false;
+            InitializeComponent();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -29,8 +28,8 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
 
             try
             {
-                this.ProgressGrid.Visibility = Visibility.Visible;
-                this.ProgressRing.IsActive = true;
+                ProgressGrid.Visibility = Visibility.Visible;
+                ProgressRing.IsActive = true;
 
                 // ProtectedTextConsumptionPage must get a valid file object as a parameter
                 if (e.Parameter != null)
@@ -40,18 +39,18 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                     if (file != null)
                     {
                         var userId = (App.Current as App).UserEmailId;
-                        ProtectedDocumentConsumer consumer = new ProtectedDocumentConsumer(file, new ConsentManager(userId), new AuthenticationManager(userId), userId);
-                        GetProtectedFileStreamResult result = await consumer.LoadAsync();
+                        var consumer = new ProtectedDocumentConsumer(file, new ConsentManager(userId), new AuthenticationManager(userId), userId);
+                        var result = await consumer.LoadAsync();
 
                         if (result.Status != GetUserPolicyResultStatus.Success)
                         {
-                            throw new RMSException(String.Format("Error in reading the document. Your policy status is {0}", result.Status.ToString()));
+                            throw new RMSException(String.Format("In reading the document. Your policy status is {0}", result.Status.ToString()));
                         }
 
-                        this.TextContent.Text = "Viewing the content of the generic file format is not supported yet.";
+                        TextContent.Text = "Viewing the content of the generic file format is not supported yet.";
                         PermissionsViewer.Policy = result.Stream.Policy;
                         PermissionsViewer.IsOpen = true;
-                        this.FileNameText.Text = consumer.UnencryptedFileName;
+                        FileNameText.Text = consumer.UnencryptedFileName;
                     }
                     else
                     {
@@ -65,12 +64,12 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
             }
             catch (Exception ex)
             {
-                exception = ex;                
+                exception = ex;
             }
             finally
             {
-                this.ProgressRing.IsActive = false;
-                this.ProgressGrid.Visibility = Visibility.Collapsed;
+                ProgressRing.IsActive = false;
+                ProgressGrid.Visibility = Visibility.Collapsed;
             }
 
             if (exception != null)
@@ -78,6 +77,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                 await MessageHelper.DisplayErrorAsync(exception.Message);
             }
         }
+
         private void RootGridTapped(object sender, TappedRoutedEventArgs e)
         {
             PermissionsViewer.IsOpen = !PermissionsViewer.IsOpen;

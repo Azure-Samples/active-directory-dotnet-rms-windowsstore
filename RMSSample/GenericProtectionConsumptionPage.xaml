@@ -15,13 +15,11 @@
                 <GradientStop Color="Black"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <uiLibrary:PermissionsFlyout x:Name="PermissionsViewer" Margin="0,0,0,-10" Padding="0" HorizontalAlignment="Left" VerticalContentAlignment="Top" />
+        <uiLibrary:PermissionsFlyout x:Name="PermissionsViewer" Margin="0,0,0,-10" Padding="0" HorizontalAlignment="Left" VerticalContentAlignment="Top" IsAutoDismissEnabled="False"/>
         <Grid Name="ControlGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LetftMargin" Width="100"></ColumnDefinition>
                 <ColumnDefinition Width="700"></ColumnDefinition>
-                <ColumnDefinition Width="75"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="TopMargin" Height="150"></RowDefinition>

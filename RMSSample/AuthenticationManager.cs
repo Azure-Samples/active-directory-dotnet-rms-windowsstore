@@ -19,7 +19,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <summary>
         /// User id or email id of the user
         /// </summary>
-        protected string userId { get; private set; }
+        protected string UserId { get; private set; }
 
         /// <summary>
         /// Authentication Manager C'tor.
@@ -27,7 +27,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <param name="userId">The user Id.</param>
         public AuthenticationManager(string userId)
         {
-            this.userId = userId; 
+            this.UserId = userId; 
         }
         /// <summary>
         /// Authenticates the user and gets the security token
@@ -56,8 +56,8 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                     var authenticationContext = new AuthenticationContext(parameters.Authority, false);
 
                     // This requires filling in by the developer, using 
-                    var clientId = "some-client-id"; // Requires generation once per application. 
-                    var redirectionUrl = "some-redirection-url" + "://authorize"; // Requires generation once per application. 
+                    const string clientId = "some-client-id"; // Requires generation once per application. 
+                    const string redirectionUrl = "some-redirection-url" + "://authorize"; // Requires generation once per application. 
 
                     authenticationResultTask = authenticationContext.AcquireTokenAsync(
                         parameters.Resource,

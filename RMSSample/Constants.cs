@@ -30,16 +30,6 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         public const string UserEmailIdKey = "RMSUserEmailId";
 
         /// <summary>
-        /// Redirect uri used in ADAL authentication code
-        /// </summary>
-        public const string RedirectUri = "https://authorize/";
-
-        /// <summary>
-        /// Temporary cache folder
-        /// </summary>
-        public const string TempCacheFolder = "TempCache";
-
-        /// <summary>
         /// ADAL error code when authentication canceled
         /// </summary>
         public const string AuthenticationCanceledErrorCode = "authentication_canceled";

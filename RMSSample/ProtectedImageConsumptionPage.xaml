@@ -2,13 +2,12 @@
     x:Class="Microsoft.RightsManagement.Apps.RMSSample.ProtectedImageConsumptionPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Microsoft.RightsManagement.Apps.RMSSample"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uiLibrary="using:Microsoft.RightsManagement.UILibrary"
     mc:Ignorable="d">
 
-    <Grid  Name="MainGrid" Tapped="RootGridTapped">
+    <Grid Tapped="RootGridTapped">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FFBBBBBB" Offset="1"/>
@@ -16,17 +15,17 @@
             </LinearGradientBrush>
         </Grid.Background>
 
-        <uiLibrary:PermissionsFlyout x:Name="PermissionsViewer" Margin="0,0,0,-10" Padding="0" HorizontalAlignment="Left" VerticalContentAlignment="Top" />
+        <uiLibrary:PermissionsFlyout x:Name="PermissionsViewer" Margin="0,0,0,-10" Padding="0" HorizontalAlignment="Left" VerticalContentAlignment="Top" IsAutoDismissEnabled="False"/>
 
-        <Grid Name="ControlGrid">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="LetftMargin" Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition Width="700"></ColumnDefinition>
                 <ColumnDefinition Width="75"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="TopMargin" Height="150"></RowDefinition>
+                <RowDefinition Height="150"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="500"></RowDefinition>
                 <RowDefinition></RowDefinition>

@@ -12,12 +12,12 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
     /// <summary>
     /// Class that has functionalities specific to protected text consuption flow
     /// </summary>
-    internal class ProtectedTextDocumentConsumer : ProtectedDocumentConsumer, IDocument, IProtectedDocumentConsumer
+    internal class ProtectedTextDocumentConsumer : ProtectedDocumentConsumer
     {
         /// <summary>
         /// Text content of the decrypted file
         /// </summary>
-        private string decryptedText;
+        private string _decryptedText;
 
         /// <summary>
         /// Text content of the decrypted file
@@ -35,7 +35,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         public ProtectedTextDocumentConsumer(IStorageFile encryptedfile, IConsentCallback consentCallback, IAuthenticationCallback authCallback, string userId) :
             base(encryptedfile, consentCallback, authCallback, userId)
         {
-            this.decryptedText = null;
+            _decryptedText = null;
         }
 
         /// <summary>
@@ -44,42 +44,37 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <returns></returns>
         public async Task<String> GetTextAsync()
         {
-            await this.LoadAsync();
+            await LoadAsync();
 
-            if (this.result.Status != GetUserPolicyResultStatus.Success)
+            if (Result.Status != GetUserPolicyResultStatus.Success)
             {
-                throw new RMSException(
-                    String.Format(
+                throw new RMSException(String.Format(
                     "Error in reading the document. Your policy status is {0}",
-                    this.result.Status.ToString())
-                    );
+                    Result.Status));
             }
 
-            if (this.decryptedText == null)
+            if (_decryptedText == null)
             {
                 // Since user can do reads multiple times in the app, it is safer to
                 // set stream position at 0 before each read.
-                this.result.Stream.Seek(0);
-                using (var reader = new DataReader(this.result.Stream))
+                Result.Stream.Seek(0);
+                using (var reader = new DataReader(Result.Stream))
                 {
                     try
                     {
                         // Note that stream.Size might return the encrypted size of the content 
                         // which may be different from the original size. So we need to use the actual size of the content
-                        uint actualSize = await reader.LoadAsync((uint)this.result.Stream.Size);
-                        this.decryptedText = reader.ReadString(actualSize > MaximumTextSize ? MaximumTextSize : actualSize);
+                        var actualSize = await reader.LoadAsync((uint)Result.Stream.Size);
+                        _decryptedText = reader.ReadString(actualSize > MaximumTextSize ? MaximumTextSize : actualSize);
                     }
                     finally
                     {
-                        if (reader != null)
-                        {
-                            reader.DetachStream();
-                        }
+                        reader.DetachStream();
                     }
                 }
             }
 
-            return this.decryptedText;
+            return _decryptedText;
         }
     }
 }

@@ -12,12 +12,12 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
     /// <summary>
     /// Class that has functionalities specific to protected image consuption flow
     /// </summary>
-    internal class ProtectedImageDocumentConsumer : ProtectedDocumentConsumer, IDocument, IProtectedDocumentConsumer
+    internal class ProtectedImageDocumentConsumer : ProtectedDocumentConsumer
     {
         /// <summary>
         /// Bitmap image of the decrypted jpg file
         /// </summary>
-        private BitmapImage decryptedBitmap;
+        private BitmapImage _decryptedBitmap;
 
         /// <summary>
         /// Initializes a new instance of ProtectedImageDocumentConsumer class with the file that needs to be decrypted
@@ -29,7 +29,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         public ProtectedImageDocumentConsumer(IStorageFile encryptedfile, IConsentCallback consentCallback, IAuthenticationCallback authCallback, string userId) :
             base(encryptedfile, consentCallback, authCallback, userId)
         {
-            this.decryptedBitmap = null;
+            _decryptedBitmap = null;
         }
 
         /// <summary>
@@ -38,24 +38,24 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <returns>Bitmap image</returns>
         public async Task<BitmapImage> GetBitmapImageAsync()
         {
-            await this.LoadAsync();
+            await LoadAsync();
 
-            if (this.result.Status != GetUserPolicyResultStatus.Success)
+            if (Result.Status != GetUserPolicyResultStatus.Success)
             {
                 throw new RMSException(
                     String.Format(
                     "Error in reading the document. Your policy status is {0}",
-                    this.result.Status.ToString())
+                    Result.Status.ToString())
                     );
             }
 
-            if (this.decryptedBitmap == null)
+            if (_decryptedBitmap == null)
             {
-                this.decryptedBitmap = new BitmapImage();
-                await this.decryptedBitmap.SetSourceAsync(this.result.Stream);
+                _decryptedBitmap = new BitmapImage();
+                await _decryptedBitmap.SetSourceAsync(this.Result.Stream);
             }
 
-            return this.decryptedBitmap;
+            return _decryptedBitmap;
         }
     }
 }

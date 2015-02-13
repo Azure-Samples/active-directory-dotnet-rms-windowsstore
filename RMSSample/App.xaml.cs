@@ -19,7 +19,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
     /// </summary>
     sealed partial class App : Application
     {
-        private string userEmailId;
+        private string _userEmailId;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -27,9 +27,9 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;            
-            this.userEmailId = DataAccess.RetrieveValue(Constants.UserEmailIdKey);
+            InitializeComponent();
+            Suspending += OnSuspending;            
+            _userEmailId = DataAccess.RetrieveValue(Constants.UserEmailIdKey);
         }
 
         // Email id /user id of the user
@@ -37,13 +37,13 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         {
             get
             {
-                return userEmailId;
+                return _userEmailId;
             }
             set
             {
                 // Store the same value in the app data
                 DataAccess.StoreValue(Constants.UserEmailIdKey, value);
-                userEmailId = value;
+                _userEmailId = value;
             }
         }
 
@@ -74,11 +74,6 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                 rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: Load state from previously suspended application
-                }
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
@@ -116,7 +111,6 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
 
@@ -131,22 +125,16 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
-
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
             if (args.Files.Count > 0)
             {
-                IStorageFile file = args.Files[0] as IStorageFile;
+                var file = args.Files[0] as IStorageFile;
 
                 if (file != null)
                 {
-                    //TODO need better logic here
                     if (!rootFrame.Navigate(typeof(MainPage), file))
                     {
                         throw new Exception("Failed to create initial page");
@@ -154,12 +142,12 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                 }
                 else
                 {
-                    //TODO throw error
+                    throw new Exception("File is null");
                 }
             }
             else
             {
-                //TODO throw error
+                throw new Exception("No arguments to load file");
             }
 
             // Ensure the current window is active

@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 //---------------------------------------------------------------- 
 
+using System;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,20 +19,14 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <summary>
         /// File (decrypted) that has been selected by the user
         /// </summary>
-        private IStorageFile userSelectedFile = null;
+        private IStorageFile _userSelectedFile;
 
         /// <summary>
         /// Initializes the page
         /// </summary>
         public MainPage()
         {
-            this.InitializeComponent();
-            
-//            var localSettings = ApplicationData.Current.LocalSettings;
-//            var container = localSettings.CreateContainer("MSIPCThin", ApplicationDataCreateDisposition.Always);
-//            container.Values["ServiceRootURLOverride"] = "https://api.hostedrms.com" + "/my/v1";
-//            container.Values["TESTHOOK_IsCacheLookupDisabled"] = true;
-
+            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,21 +35,12 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
             // as e.Parameter
             if (e.Parameter != null)
             {
-                this.userSelectedFile = e.Parameter as IStorageFile;
-
-                if (this.userSelectedFile == null)
-                {
-                    // TODO throw error
-                }
-
+                _userSelectedFile = e.Parameter as IStorageFile;
                 if ((App.Current as App).UserEmailId != null)
                 {
-                    this.EmailIdText.Text = (App.Current as App).UserEmailId;
+                    EmailIdText.Text = (App.Current as App).UserEmailId;
                 }
             }
-
-            // User might have launched the application through tiles without selecting any file.
-            // TODO: Show default message screen to the user           
         }
 
         /// <summary>
@@ -65,23 +51,27 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
         private async void NextButton_Click(object sender, RoutedEventArgs e)
-        {            
-            if (Utility.IsValidEmailAddress(EmailIdText.Text))
+        {
+            if (_userSelectedFile == null)
+            {
+                await MessageHelper.DisplayErrorAsync("Please open application using by clicking a file.");
+            }
+            else if (Utility.IsValidEmailAddress(EmailIdText.Text))
             {
                 // Store this email id in the app data as well as in global user eamil id field
-                (App.Current as App).UserEmailId = this.EmailIdText.Text.Trim();
+                (App.Current as App).UserEmailId = EmailIdText.Text.Trim();
 
-                if (Utility.IsProtectedTextFileExtension(this.userSelectedFile.FileType))
+                if (Utility.IsProtectedTextFileExtension(_userSelectedFile.FileType))
                 {
-                    this.Frame.Navigate(typeof(ProtectedTextConsumptionPage), this.userSelectedFile);
+                    Frame.Navigate(typeof(ProtectedTextConsumptionPage), _userSelectedFile);
                 }
-                else if (Utility.IsProtectedJpgFileExtension(this.userSelectedFile.FileType))
+                else if (Utility.IsProtectedJpgFileExtension(_userSelectedFile.FileType))
                 {
-                    this.Frame.Navigate(typeof(ProtectedImageConsumptionPage), this.userSelectedFile);
+                    Frame.Navigate(typeof(ProtectedImageConsumptionPage), _userSelectedFile);
                 }
-                else if (Utility.IsProtectedGenericFileExtension(this.userSelectedFile.FileType))
+                else if (Utility.IsProtectedGenericFileExtension(_userSelectedFile.FileType))
                 {
-                    this.Frame.Navigate(typeof(GenericProtectionConsumptionPage), this.userSelectedFile);
+                    Frame.Navigate(typeof(GenericProtectionConsumptionPage), _userSelectedFile);
                 }
                 else
                 {

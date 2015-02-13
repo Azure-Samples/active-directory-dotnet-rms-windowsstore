@@ -22,8 +22,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// </summary>
         public ProtectedImageConsumptionPage()
         {
-            this.InitializeComponent();
-            PermissionsViewer.IsAutoDismissEnabled = false;
+            InitializeComponent();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -32,24 +31,24 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
 
             try
             {
-                this.ProgressGrid.Visibility = Visibility.Visible;
-                this.ProgressRing.IsActive = true;
+                ProgressGrid.Visibility = Visibility.Visible;
+                ProgressRing.IsActive = true;
 
                 // ProtectedTextConsumptionPage must get a valid file object as a parameter
                 if (e.Parameter != null)
                 {
-                    IStorageFile file = e.Parameter as IStorageFile;
+                    var file = e.Parameter as IStorageFile;
 
                     if (file != null)
                     {
                         var userId = (App.Current as App).UserEmailId;
-                        ProtectedImageDocumentConsumer consumer = new ProtectedImageDocumentConsumer(
+                        var consumer = new ProtectedImageDocumentConsumer(
                             file,
                             new ConsentManager(userId),
                             new AuthenticationManager(userId),
                             userId);
 
-                        GetProtectedFileStreamResult result = await consumer.LoadAsync();
+                        var result = await consumer.LoadAsync();
 
                         if (result.Status != GetUserPolicyResultStatus.Success)
                         {
@@ -57,7 +56,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                         }
                         PermissionsViewer.Policy = result.Stream.Policy;
                         PermissionsViewer.IsOpen = true;
-                        this.FileNameText.Text = consumer.UnencryptedFileName;
+                        FileNameText.Text = consumer.UnencryptedFileName;
                         ImageContent.Source = await consumer.GetBitmapImageAsync();
                     }
                     else
@@ -76,8 +75,8 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
             }
             finally
             {
-                this.ProgressRing.IsActive = false;
-                this.ProgressGrid.Visibility = Visibility.Collapsed;
+                ProgressRing.IsActive = false;
+                ProgressGrid.Visibility = Visibility.Collapsed;
             }
 
             if (exception != null)
@@ -89,6 +88,5 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         {
             PermissionsViewer.IsOpen = !PermissionsViewer.IsOpen;
         }
-
     }
 }

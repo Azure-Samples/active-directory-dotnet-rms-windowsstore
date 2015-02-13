@@ -14,14 +14,6 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
         /// <summary>
         /// Initializes a new instance of RMSException
         /// </summary>
-        public RMSException()
-            : this("An error occurred in the app. Please try again.")
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of RMSException
-        /// </summary>
         /// <param name="message">Exception message</param>
         public RMSException(string message)
             : base(message)
