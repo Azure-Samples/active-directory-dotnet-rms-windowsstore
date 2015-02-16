@@ -48,6 +48,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                         }
 
                         TextContent.Text = "Viewing the content of the generic file format is not supported yet.";
+                        PermissionsViewer.HostingPage = this;
                         PermissionsViewer.Policy = result.Stream.Policy;
                         PermissionsViewer.IsOpen = true;
                         FileNameText.Text = consumer.UnencryptedFileName;

@@ -55,6 +55,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                         }
 
                         TextContent.Text = await consumer.GetTextAsync();
+                        PermissionsViewer.HostingPage = this;
                         PermissionsViewer.Policy = result.Stream.Policy;
                         PermissionsViewer.IsOpen = true;
                         FileNameText.Text = consumer.UnencryptedFileName;

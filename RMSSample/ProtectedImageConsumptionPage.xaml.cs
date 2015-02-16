@@ -54,6 +54,7 @@ namespace Microsoft.RightsManagement.Apps.RMSSample
                         {
                             throw new RMSException(String.Format("Error in reading the document. Your policy status is {0}", result.Status.ToString()));                            
                         }
+                        PermissionsViewer.HostingPage = this;
                         PermissionsViewer.Policy = result.Stream.Policy;
                         PermissionsViewer.IsOpen = true;
                         FileNameText.Text = consumer.UnencryptedFileName;
