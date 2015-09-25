@@ -1,10 +1,4 @@
----
-services:
-platforms:
-author: azure
----
-
-## Sample application for Microsoft RMS SDK v4.1 for Windows Store Applications ##
+# Sample application for Microsoft RMS SDK v4.1 for Windows Store Applications ##
 ----------
 The Sample for Microsoft RMS SDK v4.1 for Windows Store Applications provides a basic document consumption example for the platform. 
 ## Features
