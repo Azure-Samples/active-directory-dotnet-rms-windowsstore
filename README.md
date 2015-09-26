@@ -1,3 +1,9 @@
+---
+services: active-directory
+platforms: dotnet
+author: yaircohen
+---
+
 # Sample application for Microsoft RMS SDK v4.1 for Windows Store Applications ##
 ----------
 The Sample for Microsoft RMS SDK v4.1 for Windows Store Applications provides a basic document consumption example for the platform. 
@@ -28,3 +34,4 @@ Prerequisites
 ----------
 Client Id and Redirection Uri must be set according to the ADAL library's specifications [here](https://github.com/azureadsamples/nativeclient-dotnet) - For domain joined onprem scenarios should be registered in the local ADFS. 
  
+
