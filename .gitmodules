@@ -1,3 +1,0 @@
-[submodule "packages/rms-sdk-ui-for-windowsstore"]
-	path = packages/rms-sdk-ui-for-windowsstore
-	url = https://github.com/AzureAD/rms-sdk-ui-for-windowsstore
